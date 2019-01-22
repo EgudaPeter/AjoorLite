@@ -1,0 +1,38 @@
+#pleasewait{
+    font-size:24px; 
+    margin-left:50px;
+}
+.progress{
+    margin-left: 100px;
+}
+
+.page__background page--material__background{
+    background-color:white !important;
+}
+.textbox{
+    width:300px;
+}
+.required ::placeholder{
+    color: red !important;
+}
+
+.checkmark {
+    height: 15px;
+    width: 15px;
+    background-color:white;
+  }
+  #searchQuery{
+      width: 100%; 
+  }
+  #searchQuery ::placeholder{
+   font-size: 16px;
+}
+
+.page__background page--material__background{
+    background-color: white !important;
+}
+.search-input{
+    background-color: white !important;
+    border-radius:20px !important;
+    font-size: 16px;
+}

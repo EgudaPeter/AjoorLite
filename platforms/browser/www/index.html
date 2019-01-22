@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/onsenui.css">
+        <link rel="stylesheet" href="css/onsen-css-components.min.css">
+        <link rel="stylesheet" href="css/your.css">
+        <link rel="stylesheet" href="css/loader.css">
+        <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/onsenui.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/AppUtils.js"></script>
+    </head>
+    <body>
+        <ons-splitter>                <!-- Menu splitter -->
+            <ons-splitter-side
+                id="menu"
+                side="left"
+                width="220px"
+                collapse
+                swipeable
+            >
+                <ons-page>
+                    <ons-list>
+                        <ons-list-item
+                            onclick="fn.load('home.html')"
+                            tappable
+                        >
+                            Ajoor Lite
+                        </ons-list-item>
+                        <!-- <ons-list-item
+                            onclick="fn.load('add.html')"
+                            tappable
+                        >
+                            Add Item
+                        </ons-list-item> -->
+                    </ons-list>
+                </ons-page>
+            </ons-splitter-side>
+            <ons-splitter-content
+                id="content"
+                page="login.html"
+            ></ons-splitter-content>
+        </ons-splitter>
+
+
+        <template id="home.html">     <!-- Home -->
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button onclick="fn.open()">
+                            <ons-icon icon="md-menu"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="right">
+                        <ons-toolbar-button style="display:none" id="selectAll" onclick="selectAll()">
+                            <ons-p style="font-size:15px;">Select All</ons-p>
+                        </ons-toolbar-button>
+                        <ons-toolbar-button id="select" onclick="select()">
+                            <ons-p style="font-size:15px;">Edit</ons-p>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">Ajoor Lite</div>
+                </ons-toolbar>
+                <p style="text-align: center; margin-top: 10px;">
+                    <ons-search-input
+                      id="searchQuery"
+                      placeholder="Search"
+                      onchange="search()"
+                    ></ons-search-input>
+                  </p>
+                <ons-list id="Customers">
+                    <!-- <ons-list-header style="font-size:20px; font-weight:bold">Customer list</ons-list-header> -->
+                </ons-list>
+                <ons-fab position="bottom right" id="btnAdd">
+                    <ons-icon
+                        onclick="fn.load('add.html')"
+                        icon="md-plus"
+                    ></ons-icon>
+                </ons-fab>
+
+                <ons-fab style="display:none" id="btnRemove" onclick="deleteCustomer()" position="bottom center">
+                    <ons-icon
+                        onclick=""
+                        icon="md-delete"
+                        style="color:red"
+                    ></ons-icon>
+                </ons-fab>
+            </ons-page>
+        </template> 
+
+        <template id="add.html">      <!-- Add -->
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button onclick="fn.open()">
+                            <ons-icon icon="md-menu"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">Add Customers</div>
+                </ons-toolbar>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <p hidden>
+                        <ons-input class="textbox"
+                            id="CustomerId"
+                        ></ons-input>
+                    </p>
+                    <p>
+                        <ons-input class="textbox"
+                            id="FirstName"
+                            onblur="validate('FirstName')"
+                            modifier="underbar"
+                            placeholder="First name..."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p>
+                        <ons-input class="textbox"
+                            id="LastName"
+                            onblur="validate('LastName')"
+                            modifier="underbar"
+                            placeholder="Last name..."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p>
+                        <ons-input class="textbox"
+                            id="Email"
+                            onblur="validate('Email')"
+                            modifier="underbar"
+                            placeholder="Email..."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p>
+                        <ons-input class="textbox"
+                            id="PhoneNumber"
+                            onblur="validate('PhoneNumber')"
+                            modifier="underbar"
+                            placeholder="Phone..."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p>
+                        <ons-input class="textbox"
+                            id="Commission"
+                            onblur="validate('Commission')"
+                            modifier="underbar"
+                            placeholder="Commission..."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p>
+                        <ons-input class="textbox"
+                            id="Product"
+                            modifier="underbar"
+                            placeholder="Product..."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p style="margin-top: 30px;">
+                        <ons-button onclick="showConfirm(1)" id="btnAddOrUpdateCustomer"><fa fa-plus></fa> Add </ons-button>
+                    </p>
+                    <!-- <p style="margin-top: 30px;">
+                        <ons-button onclick="showConfirm()" hidden id="updateCustomer"><fa fa-plus></fa> Update</ons-button>
+                    </p> -->
+                </div>
+            </ons-page>
+        </template>
+
+        <template id="login.html">    <!-- Login -->
+            <ons-page>
+                <ons-toolbar>
+                    <div class="center">Login</div>
+                </ons-toolbar>
+
+                <div style="text-align: center; margin-top: 150px;">
+                    <p>
+                        <ons-input class="textbox"
+                            id="Username"
+                            onblur="validate('Username')"
+                            modifier="underbar"
+                            placeholder="Username..."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p>
+                        <ons-input type="password" class="textbox"
+                            id="Password"
+                            onblur="validate('Password')"
+                            modifier="underbar"
+                            placeholder="Password.."
+                            float
+                        ></ons-input>
+                    </p>
+                    <p style="margin-top: 30px;">
+                        <ons-button onclick="login()"><fa fa-plus></fa>Login</ons-button>
+                    </p>
+                </div>
+            </ons-page>
+        </template>
+
+    </body>
+</html>

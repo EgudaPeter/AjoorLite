@@ -39,7 +39,7 @@ function addCustomer() {
     SiteUtils.loading("Saving...");
     $.ajax({
       type: "POST",
-      url: "http://localhost:52551/api/createcustomer",
+      url: "http://192.168.1.182/Host/api/createcustomer",
       data: customer,
       headers: {
         Authorization: "Basic " + btoa(username + ":" + password)
@@ -80,7 +80,7 @@ function updateCustomer() {
     SiteUtils.loading("Updating...");
     $.ajax({
       type: "POST",
-      url: "http://localhost:52551/api/updatecustomer",
+      url: "http://192.168.1.182/Host/api/updatecustomer",
       data: customer,
       headers: {
         Authorization: "Basic " + btoa(username + ":" + password)
@@ -105,7 +105,7 @@ function getCustomers() {
   SiteUtils.loading("Please wait...");
   $.ajax({
     type: "GET",
-    url: "http://localhost:52551/api/getallcustomers",
+    url: "http://192.168.1.182/Host/api/getallcustomers",
     headers: {
       Authorization: "Basic " + btoa(username + ":" + password)
     },
@@ -132,7 +132,7 @@ function search() {
   SiteUtils.loading("Please wait...");
   $.ajax({
     type: "GET",
-    url: "http://localhost:52551/api/getcustomerbyquery/" + query,
+    url: "http://192.168.1.182/Host/api/getcustomerbyquery/" + query,
     headers: {
       Authorization: "Basic " + btoa(username + ":" + password)
     },
@@ -165,7 +165,7 @@ function login() {
     SiteUtils.loading("Logging in...");
     $.ajax({
       type: "POST",
-      url: "http://localhost:52551/api/security/login",
+      url: "http://192.168.1.182/Host/api/security/login",
       data: user,
       headers: {
         Authorization: "Basic " + btoa(user.Username + ":" + user.Password)
@@ -231,7 +231,7 @@ function drillDown(customerId) {
   SiteUtils.loading("Please wait...");
   $.ajax({
     type: "GET",
-    url: "http://localhost:52551/api/getcustomer/" + customerId,
+    url: "http://192.168.1.182/Host/api/getcustomer/" + customerId,
     headers: {
       Authorization: "Basic " + btoa(username + ":" + password)
     },
@@ -261,10 +261,14 @@ function deleteCustomer(){
   ons.notification.confirm("Delete customer(s)?").then(function(response) {
     if (response == 1) {
       SiteUtils.loading("Deleting...");
+      var customerIdsObj ={
+        IDs:listOfCustomerIds
+      };
       $.ajax({
         type: "POST",
-        url: "http://localhost:52551/api/deletecustomer",
-        data:{'':listOfCustomerIds},
+        url: "http://192.168.1.182/Host/api/deletecustomer",
+        //url: "http://localhost:52551/api/deletecustomer",
+        data: customerIdsObj,
         headers: {
           Authorization: "Basic " + btoa(username + ":" + password)
         },
@@ -277,6 +281,12 @@ function deleteCustomer(){
           $("#selectAll").hide();
           listOfCustomerIds = [];
           $("#btnRemove").hide();
+        },
+        error: function(result) {
+          SiteUtils.loadingOff();
+          if(result.status != "0"){
+            ons.notification.alert(result.responseText);
+          }
         }
       });
     } else {
